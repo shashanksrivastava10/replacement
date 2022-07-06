@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minimal-ingress
+  namespace: application
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /replacement
+        pathType: Exact
+        backend:
+          service:
+            name: replacement-svc
+            port:
+              number: 80
+      - path: /
+        pathType: Exact
+        backend:
+          service:
+            name: replacement-svc
+            port:
+              number: 80
+    host: replacement-svc.application
+        
