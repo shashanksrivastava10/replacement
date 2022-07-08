@@ -1,0 +1,8 @@
+alb:
+    clusterName: deloitte-project
+
+app:
+    Namespace: application
+    Image: 181761353994.dkr.ecr.ap-south-1.amazonaws.com/flask:latest
+    Replicas: 3
+    

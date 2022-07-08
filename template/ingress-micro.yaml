@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: minimal-ingress
-  namespace: application
+  namespace: {{.Values.app.Namespace}}
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
@@ -24,5 +24,5 @@ spec:
             name: replacement-svc
             port:
               number: 80
-    host: replacement-svc.application
+    host: replacement-svc.{{.Values.app.Namespace}}
         

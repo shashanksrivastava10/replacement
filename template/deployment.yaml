@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: replacement-deployment
+  namespace: {{.Values.app.Namespace}}
+  labels:
+    app: replacement
+spec:
+  replicas: {{.Values.app.Replicas}} 
+  selector:
+    matchLabels:
+      app: replacement
+  template:
+    metadata:
+      labels:
+        app: replacement
+    spec:
+      containers:
+      - name: replacement
+        image: {{.Values.app.Image}}
+        ports:
+        - containerPort: 5000
