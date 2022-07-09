@@ -35,4 +35,28 @@ Here we have used AWS manages service call Elastic Kubernetes cluster that manag
 Steps to creating the Stack and deploying the application:
 
 * Create IAM role for the EKS service to create a cluster on your behalf; also create a role for the node group to have read access on ECR.
-* Checkout the git main branch; navigate to the "Cloud Formation" service and create a stack, in the template upload [a relative link](cloud-formation-templates/amazon-eks-vpc-private-subnets.yaml)
+* Checkout the git main branch; navigate to the "Cloud Formation" service and create a stack, in the template upload [EKS Network Configuration](cloud-formation-templates/amazon-eks-vpc-private-subnets.yaml) template.
+* Next create a new stack and upload [EKS Cluster and Node group](cloud-formation-templates/eks-template.yaml) template, attach the roles previously created and also the subnets with VPC to be used.
+* Associate IAM OIDC provider to your cluster:
+ eksctl utils associate-iam-oidc-provider \
+    --region <region-code> \
+    --cluster <your-cluster-name> \
+    --approve
+* Download IAM policy for ALB controller: curl -o iam-policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.1/docs/install/iam_policy.json
+* Create the IAM policy:
+  aws iam create-policy \
+    --policy-name AWSLoadBalancerControllerIAMPolicy \
+    --policy-document file://iam-policy.json
+* Create a IAM role and ServiceAccount for the AWS Load Balancer controller, use the ARN from the step above:
+  eksctl create iamserviceaccount \
+  --cluster=<cluster-name> \
+  --namespace=kube-system \
+  --name=aws-load-balancer-controller \
+  --attach-policy-arn=arn:aws:iam::<AWS_ACCOUNT_ID>:policy/AWSLoadBalancerControllerIAMPolicy \
+  --override-existing-serviceaccounts \
+  --region <region-code> \
+  --approve
+* Install Cert Manager: kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml
+* Next, build the docker image "docker build -t <repoName:tag> ." and push it to the ECR.
+* Apply the helm chart in this repo: helm install --set name=replacement ./ --namespace application
+* The application should be up and running.
