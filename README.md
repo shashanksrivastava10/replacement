@@ -11,5 +11,9 @@ Open the postman application or a terminal(if using via Curl):
 
 <img width="1002" alt="image" src="https://user-images.githubusercontent.com/71400950/177881357-446d74ff-68c6-4d9b-ae6d-76a05ddc176c.png">
 
+
 Architecture Overview:
+
+![image](https://user-images.githubusercontent.com/71400950/178109813-b6676357-bd41-49ac-b39b-74942563a02b.png)
+
 
