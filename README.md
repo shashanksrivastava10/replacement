@@ -32,3 +32,7 @@ Here we have used AWS manages service call Elastic Kubernetes cluster that manag
 ![image](https://user-images.githubusercontent.com/71400950/178109813-b6676357-bd41-49ac-b39b-74942563a02b.png)
 
 
+Steps to creating the Stack and deploying the application:
+
+* Create IAM role for the EKS service to create a cluster on your behalf; also create a role for the node group to have read access on ECR.
+* Checkout the git main branch; navigate to the "Cloud Formation" service and create a stack, in the template upload [a relative link](cloud-formation-templates/amazon-eks-vpc-private-subnets.yaml)
