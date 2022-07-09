@@ -1,4 +1,4 @@
-API Usage:
+## API Usage:
 
   The Application load balancer sits on top of the kubernetes ingress controller that has ingress routing rules to redirect the traffic to the services in the "application" namespace, this namespace contains the deployment of flask-python via replacement.py and can be accessed via LB url:
   k8s-applicat-minimali-39da1c4581-164359810.us-east-1.elb.amazonaws.com
@@ -12,7 +12,7 @@ Open the postman application or a terminal(if using via Curl):
 <img width="1002" alt="image" src="https://user-images.githubusercontent.com/71400950/177881357-446d74ff-68c6-4d9b-ae6d-76a05ddc176c.png">
 
 
-Application Overview:
+## Application Overview:
 
 The application is written in python which leverages the flask framework to make host API methods, replacement.py has an app route for uri endpoints "/" and "/replacement":
 
@@ -22,7 +22,7 @@ The application is written in python which leverages the flask framework to make
 The application Dockerfile helps up to build an image and push it in the private ECR, that can then be pulled in by the worker nodes that have IAM permissions to read the repository contents.
 
 
-Architecture Overview:
+## Architecture Overview:
 
 Here we have used AWS manages service call Elastic Kubernetes cluster that manages a kuberntes control plane for us, the entire setup is launched in a custom vpc that has 4 subnets:
 
@@ -32,7 +32,7 @@ Here we have used AWS manages service call Elastic Kubernetes cluster that manag
 ![image](https://user-images.githubusercontent.com/71400950/178109813-b6676357-bd41-49ac-b39b-74942563a02b.png)
 
 
-Steps to creating the Stack and deploying the application:
+## Steps to creating the Stack and deploying the application:
 
 * Create IAM role for the EKS service to create a cluster on your behalf; also create a role for the node group to have read access on ECR.
 * Checkout the git main branch; navigate to the "Cloud Formation" service and create a stack, in the template upload [EKS Network Configuration](cloud-formation-templates/amazon-eks-vpc-private-subnets.yaml) template.
