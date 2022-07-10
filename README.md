@@ -60,3 +60,10 @@ Here we have used AWS manages service call Elastic Kubernetes cluster that manag
 * Next, build the docker image "docker build -t <repoName:tag> ." and push it to the ECR.
 * Apply the helm chart in this repo: helm install --set name=replacement ./ --namespace application
 * The application should be up and running.
+
+
+## CI/CD Integration
+
+The following repository is accessed by a Jenkins server hosted on Amazon EC2 instance and has a multibranch project configured.
+If required we can scan the repository content from jenkins and run a build to build the image and push it to ECR.
+The new image file name is referred to from the values.yaml file in the root directory of the git repo so that it picks up the name with which we intend to deploy the cluster.
